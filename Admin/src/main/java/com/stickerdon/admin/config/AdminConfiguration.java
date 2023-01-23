@@ -7,6 +7,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,14 +40,17 @@ public class AdminConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/*","/js/**", "/css/**").permitAll()
-                .requestMatchers("/admin/").permitAll()
+                .requestMatchers("/*", "/js/**", "/css/*", "/data/*", "/img/*", "/scss/**", "/vendor/**")
+                .permitAll()
+                .requestMatchers("/admin/*").permitAll()
                 .and()
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/do-login")
-                                .defaultSuccessUrl("/admin/index")
+//                                .defaultSuccessUrl("/index")
+                                .successForwardUrl("/index")
+                                .failureForwardUrl("/login?error")
                                 .permitAll()
                 ).logout(
                         logout -> logout
