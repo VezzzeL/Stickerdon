@@ -50,7 +50,6 @@ public class AdminConfiguration {
                                 .loginProcessingUrl("/do-login")
 //                                .defaultSuccessUrl("/index")
                                 .successForwardUrl("/index")
-                                .failureForwardUrl("/login?error")
                                 .permitAll()
                 ).logout(
                         logout -> logout

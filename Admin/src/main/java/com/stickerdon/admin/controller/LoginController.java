@@ -23,18 +23,21 @@ public class LoginController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
+        model.addAttribute("title", "Login");
         return "login";
     }
 
     @GetMapping("/register")
     public String register(Model model) {
+        model.addAttribute("title", "Register");
         model.addAttribute("adminDto", new AdminDto());
         return "register";
     }
 
     @RequestMapping("/index")
-    public String home(){
+    public String home(Model model){
+        model.addAttribute("title", "Home Page");
         return "index";
     }
 
@@ -74,6 +77,7 @@ public class LoginController {
 
     @GetMapping("/forgot-password")
     public String forgotPassword(Model model) {
+        model.addAttribute("title", "Forgot Password");
         return "forgot-password";
     }
 
