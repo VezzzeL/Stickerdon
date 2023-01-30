@@ -17,32 +17,46 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class AdminConfiguration {
     @Bean
-    UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService(){
         return new AdminServiceConfig();
     }
 
     @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
-                                                       UserDetailsService userDetailsService) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder)
-                .and()
-                .build();
+    public WebSecurityCustomizer webSecurityCustomizer(){
+        return (web) -> web.ignoring()
+                .requestMatchers("/js/**", "/css/*", "/data/*", "/img/*", "/scss/**", "/vendor/**");
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(
+                AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder
+                .userDetailsService(userDetailsService())
+                .passwordEncoder(bCryptPasswordEncoder());
+        return authenticationManagerBuilder.build();
+//        return http.getSharedObject(AuthenticationManagerBuilder.class)
+//                .userDetailsService(userDetailsService())
+//                .passwordEncoder(bCryptPasswordEncoder())
+//                .and()
+//                .build();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .authenticationManager(authenticationManager(http))
                 .authorizeHttpRequests()
-                .requestMatchers("/*", "/js/**", "/css/*", "/data/*", "/img/*", "/scss/**", "/vendor/**")
-                .permitAll()
-                .requestMatchers("/admin/*").permitAll()
+                .anyRequest()
+                .authenticated()
+//                .requestMatchers("/*")
+//                .permitAll()
+//                .requestMatchers("/admin/*").hasAuthority("ADMIN")
                 .and()
                 .formLogin(
                         form -> form
