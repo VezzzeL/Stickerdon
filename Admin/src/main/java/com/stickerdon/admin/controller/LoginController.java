@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LoginController {
-    @Autowired
     private AdminServiceImpl adminService;
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public LoginController(AdminServiceImpl adminService, BCryptPasswordEncoder passwordEncoder) {
+        this.adminService = adminService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/login")
     public String loginForm(Model model) {
