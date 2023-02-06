@@ -3,13 +3,11 @@ package com.stickerdon.admin.config;
 import com.stickerdon.library.model.Admin;
 import com.stickerdon.library.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.thymeleaf.templateresolver.FileTemplateResolver;
 
 import java.util.stream.Collectors;
 
