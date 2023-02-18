@@ -77,11 +77,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.stickerdon.admin</groupId>
-			<artifactId>admin</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>com.stickerdon.library</groupId>
 			<artifactId>library</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

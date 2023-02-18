@@ -1,24 +1,20 @@
-package com.stickerdon.admin.config;
+package com.stickerdon.customer.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration
-@EnableWebSecurity
-public class AdminConfiguration {
+public class CustomerConfiguration {
+
     @Bean
     public UserDetailsService userDetailsService(){
-        return new AdminServiceConfig();
+        return new CustomerServiceConfig();
     }
 
     @Bean
@@ -29,7 +25,7 @@ public class AdminConfiguration {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
         return (web) -> web.ignoring()
-                .requestMatchers("/js/**", "/css/*", "/data/*", "/img/*", "/scss/**", "/vendor/**");
+                .requestMatchers("/js/**", "/css/*", "/fonts/**", "/images/**", "/webfonts/**");
     }
 
     @Bean
@@ -40,11 +36,6 @@ public class AdminConfiguration {
                 .userDetailsService(userDetailsService())
                 .passwordEncoder(bCryptPasswordEncoder());
         return authenticationManagerBuilder.build();
-//        return http.getSharedObject(AuthenticationManagerBuilder.class)
-//                .userDetailsService(userDetailsService())
-//                .passwordEncoder(bCryptPasswordEncoder())
-//                .and()
-//                .build();
     }
 
     @Bean
@@ -76,7 +67,4 @@ public class AdminConfiguration {
                 );
         return http.build();
     }
-
-
-
 }
