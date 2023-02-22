@@ -36,33 +36,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto getById(Long id) {
-        Product product = productRepository.getReferenceById(id);
-        ProductDto productDto = new ProductDto();
-        productDto.setId(product.getId());
-        productDto.setName(product.getName());
-        productDto.setDescription(product.getDescription());
-        productDto.setCategory(product.getCategory());
-        productDto.setCostPrice(product.getCostPrice());
-        productDto.setSalePrice(product.getSalePrice());
-        productDto.setCurrentQuantity(product.getCurrentQuantity());
-        productDto.setImage(product.getImage());
-        productDto.setDeleted(product.is_deleted());
-        productDto.setActivated(product.is_activated());
-        return productDto;
-    }
-
-    @Override
-    public Product save(ProductDto productDto, MultipartFile imageProduct) {
+    public Product save(MultipartFile imageProduct, ProductDto productDto) {
         try {
             Product product = new Product();
-            if (imageProduct == null) {
+            if(imageProduct == null){
                 product.setImage(null);
-            } else {
-                if (imageUpload.uploadImage(imageProduct)) {
-                    System.out.println("uploaded");
+            }else{
+                if(imageUpload.uploadImage(imageProduct)){
+                    System.out.println("Upload successfully");
                 }
-                imageUpload.uploadImage(imageProduct);
                 product.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
             }
             product.setName(productDto.getName());
@@ -73,20 +55,21 @@ public class ProductServiceImpl implements ProductService {
             product.set_activated(true);
             product.set_deleted(false);
             return productRepository.save(product);
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }
+
     }
 
     @Override
-    public Product update(MultipartFile imageProduct, ProductDto productDto) {
+    public Product update(MultipartFile imageProduct ,ProductDto productDto) {
         try {
-            Product product = productRepository.getReferenceById(productDto.getId());
-            if (imageProduct == null) {
-                product.setImage(productDto.getImage());
-            } else {
-                if (imageUpload.checkExisted(imageProduct) == false) {
+            Product product = productRepository.getById(productDto.getId());
+            if(imageProduct == null){
+                product.setImage(product.getImage());
+            }else{
+                if(imageUpload.checkExisted(imageProduct) == false){
                     imageUpload.uploadImage(imageProduct);
                 }
                 product.setImage(Base64.getEncoder().encodeToString(imageProduct.getBytes()));
@@ -98,15 +81,16 @@ public class ProductServiceImpl implements ProductService {
             product.setCurrentQuantity(productDto.getCurrentQuantity());
             product.setCategory(productDto.getCategory());
             return productRepository.save(product);
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }
+
     }
 
     @Override
     public void deleteById(Long id) {
-        Product product = productRepository.getReferenceById(id);
+        Product product = productRepository.getById(id);
         product.set_deleted(true);
         product.set_activated(false);
         productRepository.save(product);
@@ -114,10 +98,27 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void enableById(Long id) {
-        Product product = productRepository.getReferenceById(id);
-        product.set_deleted(false);
+        Product product = productRepository.getById(id);
         product.set_activated(true);
+        product.set_deleted(false);
         productRepository.save(product);
+    }
+
+    @Override
+    public ProductDto getById(Long id) {
+        Product product = productRepository.getById(id);
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setCurrentQuantity(product.getCurrentQuantity());
+        productDto.setCategory(product.getCategory());
+        productDto.setSalePrice(product.getSalePrice());
+        productDto.setCostPrice(product.getCostPrice());
+        productDto.setImage(product.getImage());
+        productDto.setDeleted(product.is_deleted());
+        productDto.setActivated(product.is_activated());
+        return productDto;
     }
 
     @Override
@@ -135,6 +136,7 @@ public class ProductServiceImpl implements ProductService {
         Page<ProductDto> products = toPage(productDtoList, pageable);
         return products;
     }
+
 
 
     private Page toPage(List<ProductDto> list , Pageable pageable){
@@ -169,7 +171,8 @@ public class ProductServiceImpl implements ProductService {
         return productDtoList;
     }
 
-    //Customer
+
+    /*Customer*/
 
     @Override
     public List<Product> getAllProducts() {

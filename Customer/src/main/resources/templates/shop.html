@@ -1,36 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <!-- Basic -->
+
 <head th:replace="~{fragments::head}">
+
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
+
 <body>
 <!-- Start Main Top -->
 <div th:replace="~{fragments::main-top}">
 </div>
 <!-- End Main Top -->
+
+
 <!-- Start Main Top -->
 <header th:replace="~{fragments::main-header}">
 </header>
 <!-- End Main Top -->
+
 <!-- Start Top Search -->
 <div th:replace="~{fragments::top-search}">
 </div>
 <!-- End Top Search -->
+
+
 <!-- Start All Title Box -->
 <div th:replace="~{fragments::slider}">
 </div>
 <!-- End All Title Box -->
+
 <!-- Start Shop Page  -->
 <div class="shop-box-inner">
     <div class="container">
         <div class="row">
             <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
                 <div class="right-product-box">
-                    <div th:replace="fragments::nav-product">
+                    <div th:replace="~{fragments::nav-product}">
                     </div>
                     <!--all product-->
                     <div class="product-categorie-box">
@@ -85,6 +96,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
                 <div class="product-categori">
                     <div class="search-product">
@@ -112,14 +124,20 @@
     </div>
 </div>
 <!-- End Shop Page -->
+
 <!-- Start Feed  -->
 <div th:replace="~{fragments::instagram-box}">
 </div>
+
 <!-- End Feed  -->
+
+
 <!-- Start Footer  -->
 <footer th:replace="~{fragments::footer}">
 </footer>
+
 <!-- ALL JS FILES -->
 <div th:replace="~{fragments::script}"></div>
 </body>
+
 </html>

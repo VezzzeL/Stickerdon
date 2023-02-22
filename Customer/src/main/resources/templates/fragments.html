@@ -34,8 +34,9 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="our-link">
                     <ul>
-                        <li><a href="#"> Call US : +380930140019</a></li>
-                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address:Str 45a</a></li>
+                        <li><a href="#"> Call US : +84967631186</a></li>
+                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address: Km9, Nguyen Trai, Thanh Xuan, Ha
+                            Noi</a></li>
                     </ul>
                 </div>
             </div>
@@ -43,9 +44,9 @@
                 <div class="login-box">
                     <select id="" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
                         <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
-                        <option th:if = "${session.username == null}" value="http://localhost:8020/shop/login">Sign In</option>
-                        <option th:if = "${session.username != null}" value="http://localhost:8020/shop/logout">Log out</option>
-                        <option value="http://localhost:8020/shop/register" >Sign Up</option>
+                        <option th:if = "${session.username == null}" value="http://localhost:9091/stickerdon/login">Sign In</option>
+                        <option th:if = "${session.username != null}" value="http://localhost:9091/stickerdon/logout">Log out</option>
+                        <option value="http://localhost:9091/stickerdon/register" >Sign Up</option>
                     </select>
                 </div>
                 <div class="text-slid-box">
@@ -175,8 +176,8 @@
             <span>Sort by </span>
             <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD" onchange="location = this.value;">
                 <option data-display="Select">Nothing</option>
-                <option value="http://localhost:8020/shop/high-price">High Price → Low Price</option>
-                <option value="http://localhost:8020/shop/low-price">Low Price → High Price</option>
+                <option value="http://localhost:9091/stickerdon/high-price">High Price → Low Price</option>
+                <option value="http://localhost:9091/stickerdon/low-price">Low Price → High Price</option>
                 <option data-display="Select">Best Selling</option>
             </select>
         </div>
@@ -222,6 +223,7 @@
     </div>
 </div>
 <!-- End Slider -->
+
 <!-- Start Feed  -->
 <div class="instagram-box" th:fragment="instagram-box">
     <div class="main-instagram owl-carousel owl-theme">
@@ -265,7 +267,10 @@
         </div>
     </div>
 </div>
+
 <!-- End Feed  -->
+
+
 <!-- Start Footer  -->
 <footer th:fragment="footer">
     <div class="footer-main">
@@ -285,7 +290,7 @@
                         <ul class="list-time">
                             <li><i class="fas fa-phone-square"></i> Phone number: +84967631186</li>
                             <li><i class="fas fa-envelope"></i> Email: abc@gmail.com</li>
-                            <li><i class="fas fa-map-marker-alt"></i> Address: Km9, Nguyen Trai, Thanh Xuan</li>
+                            <li><i class="fas fa-map-marker-alt"></i> s</li>
                         </ul>
                     </div>
                 </div>
@@ -308,6 +313,7 @@
         </div>
     </div>
 </footer>
+
 <!-- ALL JS FILES -->
 <div th:fragment="script">
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>

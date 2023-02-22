@@ -1,5 +1,6 @@
 package com.stickerdon.library.service.impl;
 
+import com.stickerdon.library.dto.CategoryDto;
 import com.stickerdon.library.model.Category;
 import com.stickerdon.library.repository.CategoryRepository;
 import com.stickerdon.library.service.CategoryService;
@@ -71,5 +72,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAllByActivated() {
         return categoryRepository.findAllByActivated();
+    }
+
+
+    //Customer
+    @Override
+    public List<CategoryDto> getCategoryAndProduct() {
+        return categoryRepository.getCategoryAndProduct();
     }
 }

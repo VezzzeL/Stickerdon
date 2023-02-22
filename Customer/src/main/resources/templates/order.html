@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <!-- Basic -->
+
 <head th:replace="~{fragments::head}">
+
+
 </head>
+
 <body>
 <!-- Start Main Top -->
 <div th:replace="~{fragments::main-top}">
 </div>
 <!-- End Main Top -->
+
 <!-- Start Main Top -->
 <header th:replace="~{fragments::main-header}">
 </header>
 <!-- End Main Top -->
+
 <!-- Start Top Search -->
 <div th:replace="~{fragments::top-search}">
 </div>
 <!-- End Top Search -->
+
 <!-- Start All Title Box -->
 <div th:replace="~{fragments::slider}">
 </div>
 <!-- End All Title Box -->
+
 <!-- Update Personal Information -->
 <section>
     <div class="cart-box-main">
@@ -84,8 +92,8 @@
                                 <td class="total-pr">
                                     <a href="#">
                                         <span>Cash on Delivery</span>
-                                        <button class="button-cancel">Cancel</button>
-                                    </a>
+                                    <button class="button-cancel">Cancel</button>
+                                </a>
                                 </td>
                             </tr>
                             <tr>
@@ -131,8 +139,9 @@
                                 <td class="total-pr">
                                     <a href="#">
                                         <span>Cash on Delivery</span>
-                                        <button class="button-cancel">Cancel</button>
-                                    </a>
+
+                                    <button class="button-cancel">Cancel</button>
+                                </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -143,8 +152,11 @@
         </div>
     </div>
 </section>
+
 <footer th:replace="~{fragments::footer}"></footer>
+
 <!-- ALL JS FILES -->
 <div th:replace="~{fragments::script}"></div>
 </body>
+
 </html>
