@@ -55,7 +55,7 @@ public class ProductController {
                               @RequestParam("imageProduct") MultipartFile imageProduct,
                               RedirectAttributes redirectAttributes) {
         try {
-            productService.save(productDto, imageProduct);
+            productService.save(imageProduct, productDto);
             redirectAttributes.addFlashAttribute("success", "Product added");
         } catch (Exception e) {
             e.printStackTrace();

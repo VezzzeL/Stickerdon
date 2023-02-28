@@ -29,7 +29,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCart addItemToCart(Product product, int quantity, Customer customer) {
         ShoppingCart cart = customer.getShoppingCart();
 
-        if (cart.equals(null)) {
+        if (cart == null) {
             cart = new ShoppingCart();
         }
 
