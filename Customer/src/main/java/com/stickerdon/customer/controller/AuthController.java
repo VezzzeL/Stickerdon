@@ -23,9 +23,9 @@ public class AuthController {
     }
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
     public String login() {
-        return "do-login";
+        return "login";
     }
 
     @GetMapping("/register")
