@@ -26,11 +26,6 @@ public class AdminConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring()
-                .requestMatchers("/js/**", "/css/*", "/data/*", "/img/*", "/scss/**", "/vendor/**");
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -40,11 +35,6 @@ public class AdminConfiguration {
                 .userDetailsService(userDetailsService())
                 .passwordEncoder(bCryptPasswordEncoder());
         return authenticationManagerBuilder.build();
-//        return http.getSharedObject(AuthenticationManagerBuilder.class)
-//                .userDetailsService(userDetailsService())
-//                .passwordEncoder(bCryptPasswordEncoder())
-//                .and()
-//                .build();
     }
 
     @Bean
@@ -52,19 +42,15 @@ public class AdminConfiguration {
         http.csrf().disable()
                 .authenticationManager(authenticationManager(http))
                 .authorizeHttpRequests()
-//                .anyRequest()
-//                .authenticated()
-                .anyRequest().permitAll()
-//                .requestMatchers("/*")
-//                .permitAll()
-//                .requestMa   tchers("/admin/*").hasAuthority("ADMIN")
+                .requestMatchers("/js/**", "/css/*", "/data/**", "/img/**", "/scss/**", "/vendor/**").permitAll()
+                .requestMatchers("/**").permitAll()
+                .requestMatchers("/admin/*").hasAuthority("ADMIN")
                 .and()
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/do-login")
-//                                .defaultSuccessUrl("/index")
-                                .successForwardUrl("/index")
+                                .defaultSuccessUrl("/index")
                                 .permitAll()
                 ).logout(
                         logout -> logout

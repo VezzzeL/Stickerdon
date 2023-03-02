@@ -49,7 +49,6 @@ public class CustomerConfiguration {
                                 .loginPage("/login")
                                 .loginProcessingUrl("/do-login")
                                 .defaultSuccessUrl("/home")
-//                                .successForwardUrl("/index")
                                 .permitAll()
                 ).logout(
                         logout -> logout
