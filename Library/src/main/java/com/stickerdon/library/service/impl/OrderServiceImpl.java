@@ -1,9 +1,6 @@
 package com.stickerdon.library.service.impl;
 
-import com.stickerdon.library.model.CartItem;
-import com.stickerdon.library.model.Order;
-import com.stickerdon.library.model.OrderDetail;
-import com.stickerdon.library.model.ShoppingCart;
+import com.stickerdon.library.model.*;
 import com.stickerdon.library.repository.CartItemRepository;
 import com.stickerdon.library.repository.OrderDetailRepository;
 import com.stickerdon.library.repository.OrderRepository;
@@ -36,9 +33,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void saveOrder(ShoppingCart cart) {
         Order order = new Order();
+        Customer customer = cart.getCustomer();
         order.setOrderStatus("Pending");
         order.setOrderDate(new Date());
-        order.setCustomer(cart.getCustomer());
+        order.setCustomer(customer);
         order.setTotalPrice(cart.getTotalPrices());
         List<OrderDetail> orderDetailList = new ArrayList<>();
         for (CartItem cartItem : cart.getCartItem()) {
@@ -58,4 +56,18 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
 
     }
+
+    @Override
+    public void acceptOrder(Long id) {
+        Order order = orderRepository.getReferenceById(id);
+        order.setDeliveryDate(new Date());
+        order.setOrderStatus("SHIPPING");
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void cancelOrder(Long id) {
+        orderRepository.deleteById(id);
+    }
+
 }

@@ -37,30 +37,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         CartItem cartItem = findCartItem(cartItems, product.getId());
         if (cartItems == null) {
             cartItems = new HashSet<>();
-            if (cartItem == null) {
-                cartItem = new CartItem();
-                cartItem.setProduct(product);
-                cartItem.setTotalPrice(quantity * product.getCostPrice());
-                cartItem.setQuantity(quantity);
-                cartItem.setCart(cart);
-                cartItems.add(cartItem);
-                itemRepository.save(cartItem);
-            }
-        } else {
-            if(cartItem == null) {
-                cartItem = new CartItem();
-                cartItem.setProduct(product);
-                cartItem.setTotalPrice(quantity * product.getCostPrice());
-                cartItem.setQuantity(quantity);
-                cartItem.setCart(cart);
-                cartItems.add(cartItem);
-                itemRepository.save(cartItem);
-            } else {
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                cartItem.setTotalPrice(cartItem.getTotalPrice() + ( quantity * product.getCostPrice()));
-                itemRepository.save(cartItem);
-            }
         }
+        if (cartItem == null) {
+            cartItem = new CartItem();
+            cartItem.setProduct(product);
+            cartItem.setTotalPrice(quantity * product.getCostPrice());
+            cartItem.setQuantity(quantity);
+            cartItem.setCart(cart);
+            cartItems.add(cartItem);
+        }else {
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            cartItem.setTotalPrice(cartItem.getTotalPrice() + (quantity * product.getCostPrice()));
+        }
+        itemRepository.save(cartItem);
         cart.setCartItem(cartItems);
 
         int totalItems = totalItems(cart.getCartItem());
@@ -131,18 +120,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartItem;
     }
 
-    private int totalItems(Set<CartItem> cartItems){
+    private int totalItems(Set<CartItem> cartItems) {
         int totalItems = 0;
-        for(CartItem item : cartItems){
+        for (CartItem item : cartItems) {
             totalItems += item.getQuantity();
         }
         return totalItems;
     }
 
-    private double totalPrice(Set<CartItem> cartItems){
+    private double totalPrice(Set<CartItem> cartItems) {
         double totalPrice = 0.0;
 
-        for(CartItem item : cartItems){
+        for (CartItem item : cartItems) {
             totalPrice += item.getTotalPrice();
         }
 
