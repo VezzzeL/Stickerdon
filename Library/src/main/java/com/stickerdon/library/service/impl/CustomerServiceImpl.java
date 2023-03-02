@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer saveInfor(Customer customer) {
+    public Customer saveInfo(Customer customer) {
         Customer customer1 = customerRepository.findByUsername(customer.getUsername());
         customer1.setAddress(customer.getAddress());
         customer1.setCity(customer.getCity());

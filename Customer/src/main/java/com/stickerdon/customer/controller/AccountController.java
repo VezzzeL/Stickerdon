@@ -34,7 +34,7 @@ public class AccountController {
         return "account";
     }
 
-    @RequestMapping(value = "/update-infor", method = {RequestMethod.GET, RequestMethod.PUT})
+    @RequestMapping(value = "/update-info", method = {RequestMethod.GET, RequestMethod.PUT})
     public String updateCustomer(
             @ModelAttribute("customer") Customer customer,
             Model model,
@@ -43,7 +43,7 @@ public class AccountController {
         if(principal == null){
             return "redirect:/login";
         }
-        Customer customerSaved = customerService.saveInfor(customer);
+        Customer customerSaved = customerService.saveInfo(customer);
 
         redirectAttributes.addFlashAttribute("customer", customerSaved);
 
