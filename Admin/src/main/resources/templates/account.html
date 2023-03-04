@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head th:replace="~{fragments :: header}"></head>
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+  <!-- Sidebar -->
+  <ul th:replace = "~{fragments :: sidebar}"></ul>
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Topbar -->
+      <nav th:replace = "~{fragments :: topbar}"></nav>
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+      </div>
+      <!-- Admin info -->
+      <div>
+        <form th:action="@{/update-admin}" method="put" name="signupForm" id="signupForm" th:object="${admin}">
+
+          <img src="" id="signupLogo"/>
+
+          <h2 class="formTitle">
+            <i>Personal Information</i>
+          </h2>
+
+          <div class="inputDiv">
+            <label class="inputLabel" for="firstname"> First name * </label>
+            <input type="text" th:field = "*{firstName}"  id="firstname">
+          </div>
+
+          <div class="inputDiv">
+            <label class="inputLabel" for="lastname">Last name *</label>
+            <input type="text" id="lastname" th:field = "*{lastName}">
+          </div>
+
+          <div class="inputDiv">
+            <label class="inputLabel" for="username">User name *</label>
+            <input type="text" id="username" th:field = "*{username}" name="username" readonly>
+          </div>
+
+          <div class="inputDiv">
+            <label class="inputLabel" for="password">Password *</label>
+            <input type="text" id="password" th:field = "*{password}" name="password">
+          </div>
+
+
+          <div class="buttonWrapper">
+            <button type="submit" id="submitButton" class="submitButton pure-button pure-button-primary">
+              <span>Save</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+      <!-- End of Admin info -->
+    </div>
+
+    <!-- End of Main Content -->
+    <!-- Footer -->
+    <footer th:replace = "~{fragments :: footer}"></footer>
+    <!-- End of Footer -->
+  </div>
+  <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+<div th:replace = "~{fragments :: script}"></div>
+<!-- Page level plugins -->
+<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+<!-- Page level custom scripts -->
+<script th:src="@{/js/demo/chart-area-demo.js}"></script>
+<script src="@{/js/demo/chart-pie-demo.js}"></script>
+</body>
+</html>
