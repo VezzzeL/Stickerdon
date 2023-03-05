@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.stream.Collectors;
 
-public class CustomerServiceConfig implements UserDetailsService {
+public class CustomerDetailsService implements UserDetailsService {
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -21,8 +21,13 @@ public class CustomerServiceConfig implements UserDetailsService {
         if(customer == null){
             throw new UsernameNotFoundException("Customer not found");
         }
-        return new User(customer.getUsername(),
+        return new User(
+                customer.getUsername(),
                 customer.getPassword(),
+                true,
+                true,
+                true,
+                true,
                 customer.getRoles().stream()
                         .map(role -> new SimpleGrantedAuthority(role.getName()))
                         .collect(Collectors.toList()));
