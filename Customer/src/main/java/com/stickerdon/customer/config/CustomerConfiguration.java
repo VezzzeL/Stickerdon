@@ -17,7 +17,7 @@ public class CustomerConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return new CustomerServiceConfig();
+        return new CustomerDetailsService();
     }
 
     @Bean
@@ -26,23 +26,17 @@ public class CustomerConfiguration {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(
-                AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService())
-                .passwordEncoder(bCryptPasswordEncoder());
-        return authenticationManagerBuilder.build();
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authenticationManager(authenticationManager(http))
+
+        AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder.userDetailsService(userDetailsService()).passwordEncoder(bCryptPasswordEncoder());
+        AuthenticationManager manager = builder.build();
+
+        http
                 .authorizeHttpRequests()
                 .requestMatchers("/js/**", "/css/*", "/fonts/**", "/images/**", "/webfonts/**").permitAll()
-                .requestMatchers("/**").permitAll()
-                .requestMatchers("/customer/*").hasAuthority("CUSTOMER")
+                .requestMatchers("/register", "/do-register").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin(
                         form -> form
@@ -56,8 +50,11 @@ public class CustomerConfiguration {
                                 .clearAuthentication(true)
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .logoutSuccessUrl("/login?logout/")
-                                .permitAll()
-                );
+                                .permitAll())
+                .csrf().disable()
+                .cors().disable()
+                .authenticationManager(manager)
+                .httpBasic();
         return http.build();
     }
 }

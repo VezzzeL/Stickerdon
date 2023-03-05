@@ -3,11 +3,9 @@ package com.stickerdon.admin.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,34 +15,25 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class AdminConfiguration {
     @Bean
-    public UserDetailsService userDetailsService(){
-        return new AdminServiceConfig();
+    public UserDetailsService userDetailsService() {
+        return new AdminDetailsService();
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(
-                AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService())
-                .passwordEncoder(bCryptPasswordEncoder());
-        return authenticationManagerBuilder.build();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authenticationManager(authenticationManager(http))
+        AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder.userDetailsService(userDetailsService()).passwordEncoder(bCryptPasswordEncoder());
+        AuthenticationManager manager = builder.build();
+        http
                 .authorizeHttpRequests()
                 .requestMatchers("/js/**", "/css/*", "/data/**", "/img/**", "/scss/**", "/vendor/**").permitAll()
-                .requestMatchers("/**").permitAll()
-                .requestMatchers("/admin/*").hasAuthority("ADMIN")
+                .requestMatchers("/register", "/forgot-password").permitAll()
+                .anyRequest().hasAuthority("ADMIN")
                 .and()
                 .formLogin(
                         form -> form
@@ -59,10 +48,12 @@ public class AdminConfiguration {
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .logoutSuccessUrl("/login?logout/")
                                 .permitAll()
-                );
+                ).csrf().disable()
+                .cors().disable()
+                .authenticationManager(manager)
+                .httpBasic();
         return http.build();
     }
-
 
 
 }
