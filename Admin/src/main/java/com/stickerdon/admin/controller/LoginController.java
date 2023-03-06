@@ -13,10 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class LoginController {
@@ -43,10 +40,10 @@ public class LoginController {
     }
 
     @RequestMapping("/index")
-    public String home(Model model){
+    public String home(Model model) {
         model.addAttribute("title", "Home Page");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "redirect:login";
         }
         return "index";
@@ -65,15 +62,15 @@ public class LoginController {
             Admin admin = adminService.findByUsername(username);
             if (admin != null) {
                 model.addAttribute("adminDto", adminDto);
-                model.addAttribute("emailError", "Email already in use" );
+                model.addAttribute("emailError", "Email already in use");
                 return "register";
             }
-            if(adminDto.getPassword().equals(adminDto.getRepeatPassword())){
+            if (adminDto.getPassword().equals(adminDto.getRepeatPassword())) {
                 adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
                 adminService.save(adminDto);
                 model.addAttribute("success", "Successfully registered");
                 model.addAttribute("adminDto", adminDto);
-            }else{
+            } else {
                 model.addAttribute("adminDto", adminDto);
                 model.addAttribute("passwordError", "Password mismatch");
                 return "register";

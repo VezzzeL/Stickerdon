@@ -2,7 +2,6 @@ package com.stickerdon.admin.controller;
 
 import com.stickerdon.library.dto.ProductDto;
 import com.stickerdon.library.model.Category;
-import com.stickerdon.library.model.Product;
 import com.stickerdon.library.service.CategoryService;
 import com.stickerdon.library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,8 +118,8 @@ public class ProductController {
     }
 
     @GetMapping("/products/{pageNo}")
-    public String productsPage(@PathVariable("pageNo") int pageNo, Model model, Principal principal){
-        if(principal == null){
+    public String productsPage(@PathVariable("pageNo") int pageNo, Model model, Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         Page<ProductDto> products = productService.pageProducts(pageNo);
@@ -133,11 +132,11 @@ public class ProductController {
     }
 
     @GetMapping("/search-result/{pageNo}")
-    public String searchProducts(@PathVariable("pageNo")int pageNo,
+    public String searchProducts(@PathVariable("pageNo") int pageNo,
                                  @RequestParam("keyword") String keyword,
                                  Model model,
-                                 Principal principal){
-        if(principal == null){
+                                 Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         Page<ProductDto> products = productService.searchProducts(pageNo, keyword);

@@ -2,7 +2,6 @@ package com.stickerdon.admin.controller;
 
 import com.stickerdon.library.model.Order;
 import com.stickerdon.library.repository.OrderRepository;
-import com.stickerdon.library.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +12,10 @@ import java.util.List;
 
 @Controller
 public class OrderController {
-    private OrderService orderService;
     private OrderRepository orderRepository;
 
     @Autowired
-    public OrderController(OrderService orderService, OrderRepository orderRepository) {
-        this.orderService = orderService;
+    public OrderController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
@@ -51,14 +48,15 @@ public class OrderController {
     }
 
     @PostMapping("/accept-order/{id}")
-    public String acceptOrder(@PathVariable("id") Long id){
+    public String acceptOrder(@PathVariable("id") Long id) {
         Order order = orderRepository.getReferenceById(id);
         order.setOrderStatus("Order accepted");
         orderRepository.save(order);
         return "redirect:/orders";
     }
+
     @PostMapping("/complete-order/{id}")
-    public String completeOrder(@PathVariable("id") Long id){
+    public String completeOrder(@PathVariable("id") Long id) {
         Order order = orderRepository.getReferenceById(id);
         order.setOrderStatus("COMPLETED");
         orderRepository.save(order);

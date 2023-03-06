@@ -19,7 +19,7 @@ public class AdminDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin = adminRepository.findByUsername(username);
-        if(admin == null){
+        if (admin == null) {
             throw new UsernameNotFoundException("Customer not found");
         }
         return new User(admin.getUsername(),
