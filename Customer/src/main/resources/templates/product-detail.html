@@ -56,12 +56,17 @@
                     <h5 th:text="'$' + ${product.costPrice}"></h5>
                     <h4>Short Description:</h4>
                     <p th:text="${product.description}"></p>
-
-                    <div class="price-box-bar">
-                        <div class="cart-and-bay-btn">
-                            <a class="btn hvr-hover" data-fancybox-close="" href="#">Add to cart</a>
+                    <form th:action="@{/add-to-cart}" method="post">
+                        <div class="mask-icon">
+                            <ul>
+                                <li><a th:href="@{/find-product/{id}(id = ${product.id})}" data-toggle="tooltip"
+                                       data-placement="right"
+                                       title="View"><i class="fas fa-eye"></i></a></li>
+                            </ul>
+                            <input type="hidden" th:value="${product.id}" name="id">
+                            <input type="submit" class="cart" value="Add to Cart">
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

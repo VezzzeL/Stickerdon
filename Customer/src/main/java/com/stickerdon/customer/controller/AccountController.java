@@ -23,8 +23,8 @@ public class AccountController {
     }
 
     @GetMapping("/account")
-    public String accountHome(Model model , Principal principal){
-        if(principal == null){
+    public String accountHome(Model model, Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         String username = principal.getName();
@@ -39,8 +39,8 @@ public class AccountController {
             @ModelAttribute("customer") Customer customer,
             Model model,
             RedirectAttributes redirectAttributes,
-            Principal principal){
-        if(principal == null){
+            Principal principal) {
+        if (principal == null) {
             return "redirect:/login";
         }
         Customer customerSaved = customerService.saveInfo(customer);
